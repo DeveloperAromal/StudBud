@@ -16,3 +16,6 @@
 
 //   return <JoinLinkClient url={url} />;
 // }
+export default function () {
+  return <p>Under construction</p>;
+}
