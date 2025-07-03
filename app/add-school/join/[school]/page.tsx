@@ -1,7 +1,6 @@
 import JoinLinkClient from "../../widgets/JoinLinkClient";
 
 const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN;
-
 export default function JoinLink({
   params,
 }: {
