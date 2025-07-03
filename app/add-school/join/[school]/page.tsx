@@ -1,5 +1,3 @@
-// app/add-school/join/[school]/page.tsx
-
 import JoinLinkClient from "../../widgets/JoinLinkClient";
 
 interface PageProps {
