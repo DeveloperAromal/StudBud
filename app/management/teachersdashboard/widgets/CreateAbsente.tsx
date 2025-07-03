@@ -30,8 +30,13 @@ export default function AttendanceMarkPage() {
     const fetchStudents = async () => {
       setLoading(true);
       try {
+        const hostname = window.location.hostname;
+
+        const parts = hostname.split(".");
+
+        const subdomain = parts[0];
         const res = await axios.get(
-          `https://studbud-backend-server.onrender.com/api/v1/userByclass/${selectedClass}`
+          `https://studbud-backend-server.onrender.com/api/v1/userByclass/${selectedClass}/${subdomain}`
         );
         console.log("Fetched students:", res.data[0]); // DEBUG
         setStudents([res.data[0]]);
@@ -64,11 +69,17 @@ export default function AttendanceMarkPage() {
     }
 
     try {
+      const hostname = window.location.hostname;
+
+      const parts = hostname.split(".");
+
+      const subdomain = parts[0];
       const promises = Array.from(absentees).map((s_id) =>
         axios.post(
           "https://studbud-backend-server.onrender.com/api/v1/markabsentees",
           {
             s_id,
+            subdomain,
             newDaysByMonth: {
               [currentMonthKey]: [currentDay],
             },

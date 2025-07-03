@@ -1,4 +1,4 @@
-import GreetingsCard from "../../../dashboard/widgets/GreetingsCard";
+import GreetingsCard from "../widgets/GreetingsCard";
 
 export default function MainSection() {
   return (

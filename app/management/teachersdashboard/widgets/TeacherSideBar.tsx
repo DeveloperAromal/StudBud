@@ -81,7 +81,7 @@ export default function Sidebar() {
 
   return (
     <section
-      className={`lg:static h-screen pl-2 sidebar bg-white border-r shadow-sm flex flex-col justify-between transition-all duration-500 ${
+      className={`lg:static h-screen overflow-y-hidden pl-2 sidebar bg-white border-r shadow-sm flex flex-col justify-between transition-all duration-500 ${
         closed ? "w-20" : "w-80"
       } sm:absolute top-0 left-0 sm:z-50`}
     >

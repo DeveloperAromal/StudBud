@@ -7,11 +7,17 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function SignUp() {
+  const hostname = window.location.hostname;
+
+  const parts = hostname.split(".");
+
+  const subdomainData = parts[0];
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     classname: "",
+    subdomainData,
   });
 
   const [subdomain, setSubdomain] = useState<string | null>(null);

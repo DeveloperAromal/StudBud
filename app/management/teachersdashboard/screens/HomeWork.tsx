@@ -23,11 +23,15 @@ export default function TeacherHomework() {
     duration: "",
     classname: "",
   });
+  const hostname = window.location.hostname;
 
+  const parts = hostname.split(".");
+
+  const subdomain = parts[0];
   const fetchHomework = async () => {
     try {
       const res = await axios.get(
-        "https://studbud-backend-server.onrender.com/api/v1/get/homework/12"
+        `https://studbud-backend-server.onrender.com/api/v1/get/homework/${subdomain}`
       );
       setHomeworks(res.data);
     } catch (err) {
@@ -51,6 +55,7 @@ export default function TeacherHomework() {
             question: form.question,
             duration: Number(form.duration),
             classname: Number(form.classname),
+            subdomain: subdomain,
           }
         );
         console.log("Posted homework:", res.data);

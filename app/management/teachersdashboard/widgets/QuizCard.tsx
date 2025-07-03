@@ -10,14 +10,58 @@ import {
 import Link from "next/link";
 import { useEffect } from "react";
 
-export default function QuizCard({ quiz }) {
+// --- Type Definitions ---
+
+// Define the structure for normal questions within the quiz object
+interface NormalQuestions {
+  [key: string]: string;
+}
+
+// Define the structure for multiple-choice questions within the quiz object
+interface MultipleChoiceOption {
+  question: string;
+  choice1: string;
+  choice2: string;
+  choice3: string;
+  choice4: string;
+  correct: `choice${1 | 2 | 3 | 4}`;
+}
+
+// Define the overall structure for the 'question' object within the quiz
+interface QuizQuestions {
+  normalQuestions?: NormalQuestions; // Optional, as it might not always exist or be empty
+  multiplechoice?: {
+    [key: string]: MultipleChoiceOption; // Optional, as it might not always exist or be empty
+  };
+}
+
+// Define the expected structure of the 'quiz' prop
+interface QuizCardProps {
+  quiz: {
+    title: string;
+    classname: number;
+    subject: string;
+    duration: string;
+    question?: QuizQuestions; // Make it optional since it's accessed with `?.`
+    created_at?: string; // Assuming your API sends this as a string date
+    examId: string; // Assuming there's an examId for the Link href
+    // Add any other properties that your quiz object might contain
+  };
+}
+
+// --- QuizCard Component ---
+
+export default function QuizCard({ quiz }: QuizCardProps) {
+  // Safely calculate total questions using optional chaining and nullish coalescing
   const totalQuestions =
     Object.keys(quiz.question?.normalQuestions || {}).length +
     Object.keys(quiz.question?.multiplechoice || {}).length;
 
   useEffect(() => {
+    // Only log the quiz object if it's necessary for debugging.
+    // In production, you might want to remove or conditionally enable this.
     console.log(quiz);
-  });
+  }, [quiz]); // Added quiz to dependency array to ensure it re-logs if quiz object changes
 
   return (
     <div className="flex justify-between items-center p-5 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition">
@@ -45,7 +89,12 @@ export default function QuizCard({ quiz }) {
           </div>
           <div className="flex items-center gap-1">
             <CalendarDays className="w-4 h-4" />
-            <span>{new Date(quiz.created_at).toLocaleDateString()}</span>
+            <span>
+              {/* Safely display date, provide fallback if created_at is undefined */}
+              {quiz.created_at
+                ? new Date(quiz.created_at).toLocaleDateString()
+                : "N/A"}
+            </span>
           </div>
           <div className="flex items-center gap-1">
             <Clock className="w-4 h-4" />
@@ -55,8 +104,7 @@ export default function QuizCard({ quiz }) {
 
         {/* Bottom Row */}
         <div className="text-sm text-gray-500">
-          {/* You can remove "32 students" if you don't have that data */}
-          <span className="mr-4">—</span>
+          <span className="mr-4">—</span> {/* Placeholder separator */}
           <span>{totalQuestions} questions</span>
         </div>
       </div>
@@ -65,6 +113,7 @@ export default function QuizCard({ quiz }) {
       <div className="flex items-center gap-2 text-gray-900">
         <Link
           href={`/management/teachersdashboard/tabs/examandtests/e&t/${quiz.examId}`}
+          passHref // Important for Next.js Link when wrapping custom components
         >
           <button className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 text-sm font-medium flex items-center gap-1">
             <Eye className="w-4 h-4" />

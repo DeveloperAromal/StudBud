@@ -19,12 +19,16 @@ export default function TeacherAnnouncement() {
     description: "",
     classname: "",
   });
+      const hostname = window.location.hostname;
 
-  // 🔁 Fetch once on mount
+      const parts = hostname.split(".");
+
+      const subdomain = parts[0];
   const fetchAnnouncements = async () => {
     try {
+
       const res = await axios.get(
-        "https://studbud-backend-server.onrender.com/api/v1/get/announcement/post/12"
+        `https://studbud-backend-server.onrender.com/api/v1/get/announcement/post/${subdomain}`
       );
       setAnnouncements(res.data);
     } catch (error) {
@@ -33,7 +37,7 @@ export default function TeacherAnnouncement() {
   };
 
   useEffect(() => {
-    fetchAnnouncements(); // fetch once immediately
+    fetchAnnouncements();
 
     const interval = setInterval(() => {
       console.log("Fetching announcements...");
@@ -42,17 +46,21 @@ export default function TeacherAnnouncement() {
 
     return () => clearInterval(interval); // cleanup
   }, []);
-
-  // ✅ Form Submit Handler (No useEffect)
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      const hostname = window.location.hostname;
+
+      const parts = hostname.split(".");
+
+      const subdomain = parts[0];
       const res = await axios.post(
         "https://studbud-backend-server.onrender.com/api/v1/create/announcement/post",
         {
           title: form.title,
           description: form.description,
           classname: form.classname,
+          subdomain: subdomain,
         }
       );
       console.log("Posted successfully:", res.data);

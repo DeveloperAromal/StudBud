@@ -3,8 +3,8 @@ import TeacherSideBar from "../../widgets/TeacherSideBar";
 
 export default function Meeting() {
   return (
-    <section className="w-full flex items-center justify-center overflow-hidden">
-      <div className="">
+    <section className="w-full h-screen flex items-center justify-center overflow-hidden">
+      <div>
         <TeacherSideBar />
       </div>
       <CreateMeeting />
