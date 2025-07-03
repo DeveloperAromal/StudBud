@@ -1,14 +1,8 @@
 {
     "rewrites": [
         {
-            "source": "/",
-            "has": [
-                {
-                    "type": "host",
-                    "value": ":subdomain.yourdomain.com"
-                }
-            ],
-            "destination": "/s/:subdomain"
+            "source": "/path",
+            "destination": "https://:subdomain.example.com"
         }
     ]
 }
