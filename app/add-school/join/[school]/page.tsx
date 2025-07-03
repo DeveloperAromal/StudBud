@@ -1,16 +1,11 @@
 import JoinLinkClient from "../../widgets/JoinLinkClient"; // import the client component
-interface Props {
-  params: {
-    school: string;
-  };
-}
-
-const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN;
-
-export default async function JoinLink({ params }: Props) {
+export default async function JoinLink({
+  params,
+}: {
+  params: { school: string };
+}) {
   const { school } = params;
-
-  const url = `http://${school}.${rootDomain}:${process.env.PORT}`;
+  const url = `http://${school}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}:${process.env.PORT}`;
 
   return <JoinLinkClient url={url} />;
 }
