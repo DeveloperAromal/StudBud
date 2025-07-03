@@ -46,5 +46,5 @@ export default async function JoinLink({ params }: JoinLinkProps) {
   // If it's for production, reconsider the `:${process.env.PORT}` part.
   const url = `http://${school}.${rootDomain}:${process.env.PORT}`; // Likely problematic for production
 
-  return <JoinLinkClient url={url} adminData={adminData} />; // Pass adminData if needed by client component
+  return <JoinLinkClient url={url} />; // Pass adminData if needed by client component
 }
